@@ -1,5 +1,8 @@
-let cart = [];
-renderItemHTML();
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const addButton = document.querySelector(".js-add-button");
+
+const clearButton = document.querySelector(".js-clear-button");
 
 function renderItemHTML() {
   let itemHTML = "";
@@ -11,29 +14,31 @@ function renderItemHTML() {
 
   document.querySelector(".js-items-list").innerHTML = itemHTML;
 }
-
-function togglePurchased(element) {
-  element.classList.toggle("purchased"); //emphasis
+function saveToStorage() {
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
-
-const addButton = document.querySelector(".js-add-button");
-
-addButton.addEventListener("click", () => {
-  addItem();
-});
-const clearButton = document.querySelector(".js-clear-button");
-clearButton.addEventListener("click", () => {
-  clearList();
-});
-
+function togglePurchased(element) {
+  element.classList.toggle("purchased");
+  saveToStorage();
+}
 function addItem() {
   const inputElement = document.querySelector(".js-item-input");
   const name = inputElement.value;
   cart.push(name);
   console.log(cart);
-  renderItemHTML();
+  renderItemHTML(); // save to storage
+  saveToStorage();
 }
 function clearList() {
   cart = [];
   renderItemHTML();
+  saveToStorage();
+  //save to storage
 }
+addButton.addEventListener("click", () => {
+  addItem();
+});
+clearButton.addEventListener("click", () => {
+  clearList();
+});
+renderItemHTML();
