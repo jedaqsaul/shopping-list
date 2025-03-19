@@ -25,7 +25,7 @@ function addItem() {
   const inputElement = document.querySelector(".js-item-input");
   const name = inputElement.value;
   cart.push(name);
-  console.log(cart);
+  inputElement.value = "";
   renderItemHTML(); // save to storage
   saveToStorage();
 }
