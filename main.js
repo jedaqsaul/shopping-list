@@ -5,12 +5,15 @@ function renderItemHTML() {
   let itemHTML = "";
   for (let i = 0; i < cart.length; i++) {
     const item = cart[i];
-    const html = `<li>${item}</li>`;
+    const html = `<li class="listed" onclick="togglePurchased(this)">${item}</li>`; //emphasis
     itemHTML += html;
   }
-  console.log(itemHTML);
 
   document.querySelector(".js-items-list").innerHTML = itemHTML;
+}
+
+function togglePurchased(element) {
+  element.classList.toggle("purchased"); //emphasis
 }
 
 const addButton = document.querySelector(".js-add-button");
@@ -20,7 +23,7 @@ addButton.addEventListener("click", () => {
 });
 const clearButton = document.querySelector(".js-clear-button");
 clearButton.addEventListener("click", () => {
-  console.log("cleared");
+  clearList();
 });
 
 function addItem() {
@@ -28,5 +31,9 @@ function addItem() {
   const name = inputElement.value;
   cart.push(name);
   console.log(cart);
+  renderItemHTML();
+}
+function clearList() {
+  cart = [];
   renderItemHTML();
 }
